@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformService", "PlatformService.csproj", "{7893434B-FE36-4E7F-B657-DE99C04FCDED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7893434B-FE36-4E7F-B657-DE99C04FCDED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7893434B-FE36-4E7F-B657-DE99C04FCDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7893434B-FE36-4E7F-B657-DE99C04FCDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7893434B-FE36-4E7F-B657-DE99C04FCDED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
