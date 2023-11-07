@@ -12,6 +12,10 @@ builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 
+var configuration = builder.Configuration;
+var commandServiceUrl = configuration["CommandService"];
+Console.WriteLine($"CommandService URL: {commandServiceUrl}");
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -24,13 +24,8 @@ public class HttpCommandDataClient : ICommandDataClient
         );
         var response = await _httpClient.PostAsync($"{_configuration["CommandService"]}", httpContent);
 
-        if (response.IsSuccessStatusCode)
-        {
-            Console.WriteLine("--> Sync Post to command service was Ok");
-        }
-        else
-        {
-            Console.WriteLine("--> Sync Post to command service was Not Ok");
-        }
+        Console.WriteLine(response.IsSuccessStatusCode
+            ? "--> Sync Post to command service was Ok"
+            : "--> Sync Post to command service was Not Ok");
     }
 }

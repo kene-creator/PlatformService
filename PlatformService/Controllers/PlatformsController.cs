@@ -64,6 +64,6 @@ public class PlatformsController : ControllerBase
             throw;
         }
         
-        return CreatedAtAction(nameof(GetPlatformById), new { id = platfromReadDto.Id }, platfromReadDto);
+        return CreatedAtRoute(nameof(GetPlatformById), new { id = platfromReadDto.Id }, platfromReadDto);
     }
 }
