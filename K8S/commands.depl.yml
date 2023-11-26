@@ -22,7 +22,7 @@ kind: Service
 metadata:
   name: commands-clusterip-srv
 spec:
-  type: CLusterIP
+  type: ClusterIP
   selector:
     app: commandservice
   ports:
