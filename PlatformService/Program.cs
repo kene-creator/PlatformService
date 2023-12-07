@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlatformService.Data;
@@ -6,13 +7,15 @@ using PlatformService.SyncDataService.Http;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
+var configuration = builder.Configuration;
+
 
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+// builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
+// builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("PlatformDBConnection")));
 
-var configuration = builder.Configuration;
 var commandServiceUrl = configuration["CommandService"];
 Console.WriteLine($"CommandService URL: {commandServiceUrl}");
 
@@ -52,14 +55,23 @@ builder.Services.AddSwaggerGen(
 );
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
+if (builder.Environment.IsDevelopment())
+{
+        Console.WriteLine("--> In Memory Database");
+        builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
+}
+else 
+{
+        Console.WriteLine("--> Using SQL Server");
+        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("PlatformDBConnection")));
+}
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI();    
 }
 
 // app.UseHttpsRedirection();
