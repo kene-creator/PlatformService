@@ -1,62 +1,53 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PlatformService.Models;
 
-namespace PlatformService.Data;
-
-public static class PrepDb
+namespace PlatformService.Data
 {
-    public static void PrepPopulation(IApplicationBuilder app, bool isProd)
+    public static class PrepDb
     {
-        using (var serviceScope = app.ApplicationServices.CreateScope())
+        public static void PrepPopulation(IApplicationBuilder app, bool isProd)
         {
-            SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(), isProd);
+            using( var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(), isProd);
+            }
         }
-    }
 
-    private static void SeedData(AppDbContext context, bool isProd)
-    {
-
-    if (isProd)
-    {
-        Console.WriteLine("--> Attempting to apply migrations...");
-        try
+        private static void SeedData(AppDbContext context, bool isProd)
         {
-            context.Database.Migrate();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"--> Could not run migrations: {ex.Message}");
-        }
-    }
-        if (!context.Platforms.Any())
-        {
-            Console.WriteLine("--> Sedding data");
-
-            context.Platforms.AddRange(
-                new Platform()
+            if(isProd)
+            {
+                Console.WriteLine("--> Attempting to apply migrations...");
+                try
                 {
-                    Name = "Dot Net",
-                    Publisher = "Microsoft",
-                    Cost = "Free"
-                },
-                new Platform()
-                {
-                    Name = "SQL Server",
-                    Publisher = "Microsoft",
-                    Cost = "Free"
-                },
-                new Platform()
-                {
-                    Name = "Docker",
-                    Publisher = "Microsoft",
-                    Cost = "Free"
+                    context.Database.Migrate();
                 }
-            );
-            context.SaveChanges();
-        }
-        else
-        {
-            Console.WriteLine("--> We already have data");
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"--> Could not run migrations: {ex.Message}");
+                }
+            }
+            
+            if(!context.Platforms.Any())
+            {
+                Console.WriteLine("--> Seeding Data...");
+
+                context.Platforms.AddRange(
+                    new Platform() {Name="Dot Net", Publisher="Microsoft", Cost="Free"},
+                    new Platform() {Name="SQL Server Express", Publisher="Microsoft",  Cost="Free"},
+                    new Platform() {Name="Kubernetes", Publisher="Cloud Native Computing Foundation",  Cost="Free"}
+                );
+
+                context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("--> We already have data");
+            }
         }
     }
 }
