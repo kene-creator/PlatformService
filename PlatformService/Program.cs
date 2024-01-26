@@ -57,7 +57,7 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 if (builder.Environment.IsDevelopment())
 {
-        Console.WriteLine("--> In Memory Database");
+        Console.WriteLine("--> Using In Memory Database");
         builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
 }
 else 
