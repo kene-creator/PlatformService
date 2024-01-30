@@ -15,6 +15,13 @@ spec:
       containers:
         - name: platformservice
           image: kenea/platformservice:latest
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 250m
+              memory: 512Mi
 
 ---
 apiVersion: v1
