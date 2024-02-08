@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlatformService.Data;
 using PlatformService.SyncDataService.Http;
+using PlatformService.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ var configuration = builder.Configuration;
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+
+builder.Services.ConfigureCors();
 // builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
 // builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("PlatformDBConnection")));
 
@@ -57,13 +60,13 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 if (builder.Environment.IsDevelopment())
 {
-        Console.WriteLine("--> Using In Memory Database");
-        builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
+    Console.WriteLine("--> Using In Memory Database");
+    builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem"));
 }
-else 
+else
 {
-        Console.WriteLine("--> Using SQL Server");
-        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("PlatformDBConnection")));
+    Console.WriteLine("--> Using SQL Server");
+    builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("PlatformDBConnection")));
 }
 var app = builder.Build();
 
@@ -71,7 +74,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();    
+    app.UseSwaggerUI();
 }
 
 // app.UseHttpsRedirection();
