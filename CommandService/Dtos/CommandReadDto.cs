@@ -7,7 +7,6 @@ namespace CommandService.Dtos
 {
     public class CommandReadDto
     {
-
         public int Id { get; set; }
 
         public string HowTo { get; set; }
@@ -17,6 +16,5 @@ namespace CommandService.Dtos
 
 
         public int PlatformId { get; set; }
-
     }
 }
