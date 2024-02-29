@@ -2,14 +2,14 @@
 
 namespace PlatformService.Dto_s;
 
-public class PlatformCreateDto
+public record PlatformCreateDto
 {
     [Required(ErrorMessage = "Name is required")]
-    public string Name { get; set; }
-        
+    public required string Name { get; init; }
+
     [Required(ErrorMessage = "Publisher is required")]
-    public string Publisher { get; set; }
-        
+    public required string Publisher { get; init; }
+
     [Required(ErrorMessage = "Cost is required")]
-    public string Cost { get; set; }
+    public required string Cost { get; init; }
 }
