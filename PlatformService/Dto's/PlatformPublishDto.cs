@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace PlatformService.Dto_s
 {
-    public class PlatformPublishDto
+    public record PlatformPublishDto
     {
-        public int Id { get; set; }
-        public int Name { get; set; }
-        public int Event { get; set; }
+        public int Id { get; init; }
+        public int Name { get; init; }
+        public int Event { get; init; }
     }
 }
